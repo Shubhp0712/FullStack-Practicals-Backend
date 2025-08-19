@@ -1,14 +1,19 @@
 {
-  "name": "practical_8",
+  "name": "backend-project",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "start:pr8": "node Pr-8/server.js",
+    "start:pr9": "node Pr-9/server.js",
+    "start:pr10": "node Pr-10/server.js",
+    "start:pr11": "node Pr-11/server.js",
+    "start:practice": "node Practice/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Backend project containing Practical 8 and Practical 9",
   "dependencies": {
     "express": "^5.1.0"
   }
