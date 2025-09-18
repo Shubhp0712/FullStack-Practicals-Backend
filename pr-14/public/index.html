@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobPortal - Resume Upload System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-briefcase"></i>
+                    <h1>JobPortal</h1>
+                </div>
+                <nav class="nav">
+                    <a href="#upload" class="nav-link active">Upload Resume</a>
+                    <a href="#resumes" class="nav-link">View Resumes</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main">
+            <!-- Upload Section -->
+            <section id="upload" class="section upload-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-cloud-upload-alt"></i> Upload Your Resume</h2>
+                    <p>Join thousands of job seekers. Upload your PDF resume (max 2MB)</p>
+                </div>
+
+                <div class="upload-container">
+                    <form id="uploadForm" class="upload-form" enctype="multipart/form-data">
+                        <!-- Applicant Information -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="applicantName">
+                                    <i class="fas fa-user"></i>
+                                    Full Name *
+                                </label>
+                                <input type="text" id="applicantName" name="applicantName" required
+                                    placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">
+                                    <i class="fas fa-envelope"></i>
+                                    Email Address *
+                                </label>
+                                <input type="email" id="email" name="email" required
+                                    placeholder="your.email@example.com">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="position">
+                                <i class="fas fa-briefcase"></i>
+                                Position Applied For *
+                            </label>
+                            <select id="position" name="position" required>
+                                <option value="">Select a position</option>
+                                <option value="Frontend Developer">Frontend Developer</option>
+                                <option value="Backend Developer">Backend Developer</option>
+                                <option value="Full Stack Developer">Full Stack Developer</option>
+                                <option value="UI/UX Designer">UI/UX Designer</option>
+                                <option value="Data Scientist">Data Scientist</option>
+                                <option value="DevOps Engineer">DevOps Engineer</option>
+                                <option value="Product Manager">Product Manager</option>
+                                <option value="QA Engineer">QA Engineer</option>
+                                <option value="Mobile Developer">Mobile Developer</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <!-- File Upload -->
+                        <div class="form-group">
+                            <label for="resume">
+                                <i class="fas fa-file-pdf"></i>
+                                Resume (PDF only, max 2MB) *
+                            </label>
+                            <div class="file-input-container">
+                                <input type="file" id="resume" name="resume" accept=".pdf" required>
+                                <div class="file-input-display">
+                                    <div class="file-placeholder">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <span>Click to select PDF file or drag & drop</span>
+                                        <small>Maximum file size: 2MB</small>
+                                    </div>
+                                    <div class="file-info" style="display: none;">
+                                        <i class="fas fa-file-pdf"></i>
+                                        <span class="file-name"></span>
+                                        <span class="file-size"></span>
+                                        <button type="button" class="remove-file">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Upload Button -->
+                        <button type="submit" class="upload-btn" disabled>
+                            <i class="fas fa-upload"></i>
+                            Upload Resume
+                        </button>
+                    </form>
+
+                    <!-- Upload Progress -->
+                    <div id="uploadProgress" class="upload-progress" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading...</span>
+                    </div>
+
+                    <!-- Upload Result -->
+                    <div id="uploadResult" class="upload-result" style="display: none;"></div>
+                </div>
+            </section>
+
+            <!-- Resumes Section -->
+            <section id="resumes" class="section resumes-section" style="display: none;">
+                <div class="section-header">
+                    <h2><i class="fas fa-folder-open"></i> Uploaded Resumes</h2>
+                    <p>Manage and download submitted resumes</p>
+                </div>
+
+                <div class="resumes-container">
+                    <div class="resumes-stats">
+                        <div class="stat-card">
+                            <i class="fas fa-file-pdf"></i>
+                            <div class="stat-info">
+                                <span class="stat-number" id="totalResumes">0</span>
+                                <span class="stat-label">Total Resumes</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-clock"></i>
+                            <div class="stat-info">
+                                <span class="stat-number" id="todayUploads">0</span>
+                                <span class="stat-label">Today's Uploads</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resumes-list" id="resumesList">
+                        <div class="loading" id="resumesLoading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            Loading resumes...
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 JobPortal. Secure resume upload system with file validation.</p>
+        </footer>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>Confirm Action</h3>
+            <p id="confirmMessage"></p>
+            <div class="modal-actions">
+                <button id="confirmYes" class="btn btn-danger">Yes, Delete</button>
+                <button id="confirmNo" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

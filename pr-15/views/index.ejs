@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-book"></i> City Library Portal</h1>
+                <% if (user) { %>
+                    <div class="user-info">
+                        <span>Welcome, <%= user.name %>!</span>
+                        <a href="/logout" class="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                    <% } else { %>
+                        <a href="/login" class="login-btn">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                        <% } %>
+            </div>
+        </header>
+
+        <main class="main">
+            <section class="hero">
+                <div class="hero-content">
+                    <h2>Welcome to City Library Portal</h2>
+                    <p>Your gateway to knowledge and digital resources</p>
+
+                    <% if (user) { %>
+                        <div class="welcome-panel">
+                            <h3>Hello, <%= user.name %>!</h3>
+                            <p>You are successfully logged in with session management.</p>
+                            <div class="action-buttons">
+                                <a href="/profile" class="btn btn-primary">
+                                    <i class="fas fa-user"></i> View Profile & Session Info
+                                </a>
+                                <a href="/logout" class="btn btn-secondary">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </a>
+                            </div>
+                        </div>
+                        <% } else { %>
+                            <div class="login-prompt">
+                                <h3>Please Login to Access Your Account</h3>
+                                <p>Experience our session management system with secure authentication.</p>
+                                <a href="/login" class="btn btn-primary">
+                                    <i class="fas fa-sign-in-alt"></i> Login to Library Portal
+                                </a>
+                            </div>
+                            <% } %>
+                </div>
+            </section>
+
+            <section class="features">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Secure Sessions</h3>
+                        <p>Advanced session management with automatic expiration and secure cookies.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-clock"></i>
+                        <h3>Login Tracking</h3>
+                        <p>Track your login time and session duration with real-time updates.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-user-shield"></i>
+                        <h3>Authentication</h3>
+                        <p>Protected routes with middleware-based authentication system.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-database"></i>
+                        <h3>Profile Management</h3>
+                        <p>View your profile information and session details in one place.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 City Library Portal. Session Management Practical - PR-15</p>
+            <p>Current Time: <%= currentTime %>
+            </p>
+        </footer>
+    </div>
+</body>
+
+</html>

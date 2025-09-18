@@ -7,6 +7,7 @@
     "start:pr9": "node Pr-9/server.js",
     "start:pr10": "node Pr-10/server.js",
     "start:pr11": "node Pr-11/server.js",
+    "start:pr12": "node Pr-12/server.js",
     "start:practice": "node Practice/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,6 +16,7 @@
   "license": "ISC",
   "description": "Backend project containing Practical 8 and Practical 9",
   "dependencies": {
+    "ejs": "^3.1.10",
     "express": "^5.1.0"
   }
 }

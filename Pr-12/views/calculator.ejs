@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Calculator | Advanced Math Tool</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.css">
+</head>
+
+<body>
+    <div class="background-pattern"></div>
+
+    <div class="main-container">
+        <header class="app-header">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <i data-feather="calculator"></i>
+                </div>
+                <h1 class="app-title">Calculator Pro</h1>
+            </div>
+            <p class="app-tagline">Professional Math Computing</p>
+        </header>
+
+        <div class="calculator-wrapper">
+            <div class="calculator-panel">
+                <!-- Display Section -->
+                <div class="display-section">
+                    <div class="calculation-display">
+                        <% if (typeof result !=='undefined' && result !==null) { %>
+                            <div class="expression">
+                                <%= num1 %>
+                                    <%= operation==='add' ? '+' : operation==='subtract' ? '−' : operation==='multiply'
+                                        ? '×' : '÷' %>
+                                        <%= num2 %>
+                            </div>
+                            <div class="result-value">= <%= result %>
+                            </div>
+                            <% } else { %>
+                                <div class="placeholder">Enter calculation</div>
+                                <% } %>
+                    </div>
+                </div>
+
+                <!-- Input Form -->
+                <form action="/calculate" method="POST" class="calc-form" id="calculatorForm">
+                    <div class="input-grid">
+                        <div class="input-field">
+                            <input type="text" id="num1" name="num1" value="<%= num1 %>" placeholder="First number"
+                                class="number-input" autocomplete="off" required>
+                        </div>
+
+                        <div class="operation-selector">
+                            <div class="operation-grid">
+                                <label class="operation-button <%= operation === 'add' ? 'active' : '' %>"
+                                    data-operation="add">
+                                    <input type="radio" name="operation" value="add" <%=operation==='add' ? 'checked'
+                                        : '' %>>
+                                    <span class="op-symbol">+</span>
+                                    <span class="op-name">Add</span>
+                                </label>
+
+                                <label class="operation-button <%= operation === 'subtract' ? 'active' : '' %>"
+                                    data-operation="subtract">
+                                    <input type="radio" name="operation" value="subtract" <%=operation==='subtract'
+                                        ? 'checked' : '' %>>
+                                    <span class="op-symbol">−</span>
+                                    <span class="op-name">Subtract</span>
+                                </label>
+
+                                <label class="operation-button <%= operation === 'multiply' ? 'active' : '' %>"
+                                    data-operation="multiply">
+                                    <input type="radio" name="operation" value="multiply" <%=operation==='multiply'
+                                        ? 'checked' : '' %>>
+                                    <span class="op-symbol">×</span>
+                                    <span class="op-name">Multiply</span>
+                                </label>
+
+                                <label class="operation-button <%= operation === 'divide' ? 'active' : '' %>"
+                                    data-operation="divide">
+                                    <input type="radio" name="operation" value="divide" <%=operation==='divide'
+                                        ? 'checked' : '' %>>
+                                    <span class="op-symbol">÷</span>
+                                    <span class="op-name">Divide</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="input-field">
+                            <input type="text" id="num2" name="num2" value="<%= num2 %>" placeholder="Second number"
+                                class="number-input" autocomplete="off" required>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button type="submit" class="calculate-button">
+                            <i data-feather="equals"></i>
+                            Calculate
+                        </button>
+                        <button type="button" class="clear-button" onclick="clearForm()">
+                            <i data-feather="x"></i>
+                            Clear
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Error Display -->
+                <% if (typeof error !=='undefined' && error) { %>
+                    <div class="error-message">
+                        <i data-feather="alert-circle"></i>
+                        <%= error %>
+                    </div>
+                    <% } %>
+
+                        <!-- History Section -->
+                        <% if (typeof result !=='undefined' && result !==null) { %>
+                            <div class="calculation-info">
+                                <div class="info-item">
+                                    <span class="info-label">Result Type:</span>
+                                    <span class="info-value">
+                                        <%= Number.isInteger(parseFloat(result)) ? 'Integer' : 'Decimal' %>
+                                    </span>
+                                </div>
+                                <% if (operation==='divide' && parseFloat(num2) !==0) { %>
+                                    <div class="info-item">
+                                        <span class="info-label">Precision:</span>
+                                        <span class="info-value">
+                                            <%= result.toString().includes('.') ? result.toString().split('.')[1].length
+                                                : 0 %> decimal places
+                                        </span>
+                                    </div>
+                                    <% } %>
+                            </div>
+                            <% } %>
+            </div>
+
+            <!-- Additional Features Panel -->
+            <div class="features-panel">
+                <h3 class="features-title">Calculator Features</h3>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i data-feather="zap"></i>
+                        <span>Real-time validation</span>
+                    </div>
+                    <div class="feature-item">
+                        <i data-feather="keyboard"></i>
+                        <span>Keyboard shortcuts</span>
+                    </div>
+                    <div class="feature-item">
+                        <i data-feather="target"></i>
+                        <span>High precision</span>
+                    </div>
+                    <div class="feature-item">
+                        <i data-feather="smartphone"></i>
+                        <span>Mobile responsive</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Keyboard Shortcuts Info -->
+        <div class="shortcuts-info">
+            <div class="shortcuts-title">Keyboard Shortcuts:</div>
+            <div class="shortcuts-list">
+                <span class="shortcut"><kbd>+</kbd> Add</span>
+                <span class="shortcut"><kbd>-</kbd> Subtract</span>
+                <span class="shortcut"><kbd>*</kbd> Multiply</span>
+                <span class="shortcut"><kbd>/</kbd> Divide</span>
+                <span class="shortcut"><kbd>Enter</kbd> Calculate</span>
+                <span class="shortcut"><kbd>Esc</kbd> Clear</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="/script.js"></script>
+    <script>
+        // Initialize Feather icons
+        feather.replace();
+
+        // Clear form function
+        function clearForm() {
+            document.getElementById('calculatorForm').reset();
+            window.location.href = '/';
+        }
+    </script>
+</body>
+
+</html>

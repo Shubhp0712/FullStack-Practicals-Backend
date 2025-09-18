@@ -1,57 +1,41 @@
 const express = require('express');
-
+const path = require('path');
 const app = express();
-const PORT = 3000;
+const port = 3011;
 
-// Home route - Dashboard page
-app.get('/home', (req, res) => {
-    res.send(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Dashboard</title>
-            <style>
-                body {
-                    margin: 0;
-                    padding: 0;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 100vh;
-                    color: black;
-                }
-            
-                h1 {
-                    font-size: 3rem;
-                    margin: 0;
-                }
-                p {
-                    font-size: 1.2rem;
-                    margin-top: 10px;
-                    opacity: 0.9;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                <h1>Welcome to Dashboard</h1>
-                <p>Your project template is ready!</p>
-            </div>
-        </body>
-        </html>
-    `);
-});
+// Serve static files from current directory
+app.use(express.static(path.join(__dirname)));
 
-// Root route - redirect to home
+// Serve index.html for the root route
 app.get('/', (req, res) => {
-    res.redirect('/home');
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Start server
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
-    console.log(`🏠 Dashboard available at: http://localhost:${PORT}/home`);
-    console.log(`📋 Project template ready for team onboarding!`);
+app.listen(port, () => {
+    console.log(`🚀 SocialChat Server`);
+    console.log(`📱 Running on http://localhost:${port}`);
+    console.log(`⏰ Started at ${new Date().toLocaleString()}`);
+    console.log('-------------------------------------------');
+    console.log('📋 Features:');
+    console.log('   ✅ Firebase Authentication');
+    console.log('   ✅ Google OAuth Login');
+    console.log('   ✅ Real-time Chat');
+    console.log('   ✅ Multiple Chat Rooms');
+    console.log('   ✅ Online Users List');
+    console.log('   ✅ Emoji Picker');
+    console.log('   ✅ Typing Indicators');
+    console.log('   ✅ Modern UI Design');
+    console.log('-------------------------------------------');
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+    console.log('\n🛑 SIGTERM received. Shutting down gracefully...');
+    process.exit(0);
+});
+
+process.on('SIGINT', () => {
+    console.log('\n🛑 SIGINT received. Shutting down gracefully...');
+    process.exit(0);
 });

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-book"></i> City Library Portal</h1>
+                <div class="header-nav">
+                    <a href="/" class="nav-btn">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a href="/logout" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <main class="main">
+            <section class="profile-section">
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="user-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="user-info">
+                            <h2>
+                                <%= user.name %>
+                            </h2>
+                            <p class="user-email">
+                                <%= user.email %>
+                            </p>
+                            <p class="member-since">Member since <%= user.memberSince %>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="profile-content">
+                        <div class="session-card">
+                            <div class="card-header">
+                                <i class="fas fa-clock"></i>
+                                <h3>Current Session Information</h3>
+                            </div>
+                            <div class="session-details">
+                                <div class="session-item">
+                                    <span class="label">Login Time:</span>
+                                    <span class="value">
+                                        <%= user.loginTimeFormatted %>
+                                    </span>
+                                </div>
+                                <div class="session-item">
+                                    <span class="label">Session Duration:</span>
+                                    <span class="value session-duration" data-login-time="<%= user.loginTime %>">
+                                        <%= sessionDuration %>
+                                    </span>
+                                </div>
+                                <div class="session-item">
+                                    <span class="label">Session ID:</span>
+                                    <span class="value session-id">
+                                        <%= sessionInfo.sessionId %>
+                                    </span>
+                                </div>
+                                <div class="session-item">
+                                    <span class="label">Session Expires:</span>
+                                    <span class="value">
+                                        <%= sessionInfo.expiresAt %>
+                                    </span>
+                                </div>
+                                <div class="session-item">
+                                    <span class="label">Current Time:</span>
+                                    <span class="value current-time">
+                                        <%= currentTime %>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="user-details-card">
+                            <div class="card-header">
+                                <i class="fas fa-user"></i>
+                                <h3>User Details</h3>
+                            </div>
+                            <div class="user-details">
+                                <div class="detail-item">
+                                    <span class="label">Full Name:</span>
+                                    <span class="value">
+                                        <%= user.name %>
+                                    </span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Username:</span>
+                                    <span class="value">
+                                        <%= user.username %>
+                                    </span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Email Address:</span>
+                                    <span class="value">
+                                        <%= user.email %>
+                                    </span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">User ID:</span>
+                                    <span class="value">
+                                        <%= user.id %>
+                                    </span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Member Since:</span>
+                                    <span class="value">
+                                        <%= user.memberSince %>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="session-management-card">
+                            <div class="card-header">
+                                <i class="fas fa-cogs"></i>
+                                <h3>Session Management</h3>
+                            </div>
+                            <div class="management-content">
+                                <p>Your session is automatically managed with the following features:</p>
+                                <div class="features-list">
+                                    <div class="feature-item">
+                                        <i class="fas fa-shield-alt"></i>
+                                        <span>Secure session storage with encryption</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>Automatic session expiration (2 hours)</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-sync-alt"></i>
+                                        <span>Real-time session duration tracking</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <i class="fas fa-trash-alt"></i>
+                                        <span>Complete session destruction on logout</span>
+                                    </div>
+                                </div>
+
+                                <div class="action-buttons">
+                                    <button onclick="refreshSession()" class="btn btn-secondary">
+                                        <i class="fas fa-sync-alt"></i> Refresh Session Info
+                                    </button>
+                                    <a href="/logout" class="btn btn-danger">
+                                        <i class="fas fa-sign-out-alt"></i> End Session (Logout)
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 City Library Portal. Session Management Practical - PR-15</p>
+        </footer>
+    </div>
+
+    <script>
+        // Update session duration in real-time
+        function updateSessionDuration() {
+            const loginTime = new Date(document.querySelector('.session-duration').getAttribute('data-login-time'));
+            const now = new Date();
+            const duration = now - loginTime;
+
+            const minutes = Math.floor(duration / (1000 * 60));
+            const seconds = Math.floor((duration % (1000 * 60)) / 1000);
+
+            document.querySelector('.session-duration').textContent = `${minutes}m ${seconds}s`;
+
+            // Update current time
+            document.querySelector('.current-time').textContent = now.toLocaleString();
+        }
+
+        // Update every second
+        setInterval(updateSessionDuration, 1000);
+
+        // Refresh session info
+        function refreshSession() {
+            window.location.reload();
+        }
+
+        // Copy session ID to clipboard
+        document.querySelector('.session-id').addEventListener('click', function () {
+            navigator.clipboard.writeText(this.textContent).then(() => {
+                const originalText = this.textContent;
+                this.textContent = 'Copied!';
+                this.style.color = '#10b981';
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.style.color = '';
+                }, 2000);
+            });
+        });
+
+        // Add tooltips and interactive elements
+        document.addEventListener('DOMContentLoaded', function () {
+            // Add click-to-copy functionality for session ID
+            const sessionId = document.querySelector('.session-id');
+            sessionId.title = 'Click to copy session ID';
+            sessionId.style.cursor = 'pointer';
+        });
+    </script>
+</body>
+
+</html>

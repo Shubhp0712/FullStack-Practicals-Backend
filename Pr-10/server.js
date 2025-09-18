@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = 3002;
 
 // Route to display log file content
 app.get('/', (req, res) => {
